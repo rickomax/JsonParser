@@ -6,9 +6,7 @@ The values used to do fields lookup must be hashed in forehand.
 The hash lookup is not collision-free, but it peformed well enough for my use cases.
 Some files from the project uses "unsafe" methods.
 
-Usage:
-
-test.json contents:
+`test.json` contents:
 ```json
 {
   "TestString": "Hello",
@@ -18,6 +16,7 @@ test.json contents:
 }
 ```
 
+Usage:
 ```csharp
 using System;
 using System.IO;
