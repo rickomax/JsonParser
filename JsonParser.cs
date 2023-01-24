@@ -24,6 +24,7 @@ namespace JsonParser
         private const char LFChar = '\n';
         private const char SubChar = '-';
         private const char AddChar = '+';
+        private const char BackslashChar = '\\';
 
         private const long _true_token = 6774539739450702579;
         private const long _false_token = 7096547112153268318;
@@ -97,11 +98,12 @@ namespace JsonParser
                             {
                                 _binaryReader.Read();
                                 peek = _binaryReader.PeekChar();
-                                if (peek == QuoteChar)
+                                if (peek == QuoteChar && lastPeek != BackslashChar)
                                 {
                                     break;
                                 }
                                 tokenHash = HashUtils.GetHash(tokenHash, peek);
+                                lastPeek = peek;
                             }
                             _binaryReader.Read();
                             tokenLength = _binaryReader.BaseStream.Position - tokenPosition - 1;
