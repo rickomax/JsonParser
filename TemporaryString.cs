@@ -21,7 +21,10 @@ namespace JsonParser
             {
                 fixed (char* c = _chars)
                 {
-                    UnsafeUtility.MemSet(c, 0, _length * sizeof(char));
+                    for (var i = 0; i < _length; i++)
+                    {
+                        c[i] = '\0';
+                    }
                     value.CopyTo(_chars);
                     fixed (char* s = _charString)
                     {
