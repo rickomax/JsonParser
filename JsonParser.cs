@@ -115,8 +115,10 @@ namespace JsonParser
                             initialChar = (char)peek;
                             tokenHash = HashUtils.GetHashInitialValue();
                             tokenPosition = _binaryReader.BaseStream.Position;
+                            int lastPeek;
                             do
                             {
+                                lastPeek = peek;
                                 tokenHash = HashUtils.GetHash(tokenHash, peek);
                                 _binaryReader.Read();
                                 peek = _binaryReader.PeekChar();
@@ -126,7 +128,7 @@ namespace JsonParser
                                 peek != OpenSquareChar &&
                                 peek != CloseSquareChar &&
                                 peek != ColonChar &&
-                                peek != CommaChar &&
+                                (peek != CommaChar && lastPeek != BackslashChar) &&
                                 peek != QuoteChar &&
                                 peek != SpaceChar &&
                                 peek != TabChar &&
