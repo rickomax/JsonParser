@@ -21,13 +21,17 @@ Usage:
 using System;
 using System.IO;
 using JsonParser;
+
 ...
+
 //Pre-hashed keys
 private static long testStringHash = HashUtils.GetHash("TestString");
 private static long testIntHash = HashUtils.GetHash("TestInt");
 private static long testFloatHash = HashUtils.GetHash("TestFloat");
 private static long testArrayHash = HashUtils.GetHash("TestArray");
+
 ...
+
 using (var binaryReader = new BinaryReader(File.Open("test.json", FileMode.Open)) {
     var jsonParser = new JsonParser(binaryReader);
     
