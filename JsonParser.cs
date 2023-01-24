@@ -94,6 +94,7 @@ namespace JsonParser
                             initialChar = (char)peek;
                             tokenHash = HashUtils.GetHashInitialValue();
                             tokenPosition = _binaryReader.BaseStream.Position + 1;
+                            var lastPeek = peek;
                             for (; ; )
                             {
                                 _binaryReader.Read();
