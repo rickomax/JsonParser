@@ -66,8 +66,7 @@ namespace JsonParser
         /// <returns>The Hash base value.</returns>
         public static long GetHashInitialValue()
         {
-            var h = HashBasis;
-            return h;
+            return HashBasis;
         }
 
         /// <summary>
