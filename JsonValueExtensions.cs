@@ -4,7 +4,13 @@ namespace JsonParser
 {
     public static class JsonValueExtensions
     {
-        public static bool TryGetChildValueAsString(this JsonParser.JsonValue value, long fieldName, out string outValue, TemporaryString temporaryString, string defaultValue = null)
+        public static bool HasValue(this JsonParser.JsonValue value, long fieldName)
+        {
+            var property = value.GetChildWithKey(fieldName);
+            return property.Valid;
+        }
+
+        public static bool TryGetChildValueAsString(this JsonParser.JsonValue value, long fieldName, out string outValue, string defaultValue = null)
         {
             var property = value.GetChildWithKey(fieldName);
             if (!property.Valid)
@@ -12,31 +18,25 @@ namespace JsonParser
                 outValue = defaultValue;
                 return false;
             }
-            outValue = GetValueAsString(property, temporaryString, defaultValue);
+            outValue = GetValueAsString(property, defaultValue);
             return true;
         }
 
-        public static string GetChildValueAsString(this JsonParser.JsonValue value, long fieldName, TemporaryString temporaryString, string defaultValue = null)
+        public static string GetChildValueAsString(this JsonParser.JsonValue value, long fieldName, string defaultValue = null)
         {
-            var result = TryGetChildValueAsString(value, fieldName, out var outValue, temporaryString, defaultValue);
+            var result = TryGetChildValueAsString(value, fieldName, out var outValue, defaultValue);
             return outValue;
         }
 
-        public static bool HasValue(this JsonParser.JsonValue value, long fieldName)
-        {
-            var property = value.GetChildWithKey(fieldName);
-            return property.Valid;
-        }
-
-        public static bool TryGetValueAsString(this JsonParser.JsonValue value, out string outValue, TemporaryString temporaryString, string defaultValue = default)
+        public static bool TryGetValueAsString(this JsonParser.JsonValue value, out string outValue, string defaultValue = default)
         {
             outValue = value.Valid ? value.ToString() : defaultValue;
             return value.Valid;
         }
 
-        public static string GetValueAsString(this JsonParser.JsonValue value, TemporaryString temporaryString, string defaultValue = default)
+        public static string GetValueAsString(this JsonParser.JsonValue value, string defaultValue = default)
         {
-            var result = TryGetValueAsString(value, out var outValue, temporaryString, defaultValue);
+            var result = TryGetValueAsString(value, out var outValue, defaultValue);
             return outValue;
         }
 
@@ -69,7 +69,6 @@ namespace JsonParser
             }
             return defaultValue;
         }
-
 
         public static bool TryGetChildValueAsFloat(this JsonParser.JsonValue value, long fieldName, out float outValue, TemporaryString temporaryString, float defaultValue = default)
         {
